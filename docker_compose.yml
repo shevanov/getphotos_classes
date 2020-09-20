@@ -1,0 +1,37 @@
+version: '3.0'
+services:
+
+  db:
+    image: postgres:12.4
+    container_name: vk_postgres
+    restart: always
+    env_file:
+      - ./settings/.postgres.prod.env
+    ports:
+      - 5432:5432
+    volumes:
+      - db-data:/var/lib/pgsql/data
+
+
+  adminer:
+    image: adminer
+    container_name: vk_postgres_adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  get_photos_app:
+    build: .
+    container_name: getphotosapp
+    image: getphotos
+    env_file:
+      - ./settings/.credentials.env
+      - ./settings/.postgres.prod.env
+    entrypoint: python3 main.py
+    volumes:
+      - ./:/usr/src/app
+
+
+volumes:
+  db-data:
+

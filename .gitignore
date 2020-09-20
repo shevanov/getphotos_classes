@@ -1,6 +1,6 @@
 # Default ignored files
 __pycache__
 .idea
+venv
+settings
 .DS_Store
-.settings
-.venv
