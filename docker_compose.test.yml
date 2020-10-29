@@ -1,0 +1,37 @@
+version: '3.0'
+services:
+
+  db:
+    image: postgres:12.4
+    container_name: vk_postgres
+    restart: always
+    env_file:
+      - tests/.postgres.stage.env
+    ports:
+      - 5432:5432
+    volumes:
+      - db-data:/var/lib/pgsql/data
+
+
+  adminer:
+    image: adminer
+    container_name: vk_postgres_adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  get_photos_app:
+    build: .
+    container_name: getphotosapp
+    image: getphotos
+    env_file:
+      - tests/.postgres.stage.env
+    volumes:
+      - ./:/usr/src/app
+    working_dir: /usr/src/app
+    command: python3 ./tests/test_app.py
+
+
+volumes:
+  db-data:
+
