@@ -24,7 +24,8 @@ class VkWrapper:
             )
         return photos_list
 
-    def _max_photo_size_searcher(self, r):
+    @staticmethod
+    def _max_photo_size_searcher(r):
         """
         Определяем максимальное разрешение фотографии из возможных вариантов, для записи в БД
         """
